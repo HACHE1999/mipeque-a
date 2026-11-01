@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#171416">
+  <meta name="description" content="Una carta escrita con cariño en un día especial.">
+  <title>Una carta para ti❤</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #171416;
+      --bg-soft: #211b1f;
+      --paper: #f1e7e8;
+      --muted: #bba9ae;
+      --accent: #c58b9b;
+      --accent-soft: #8f606d;
+      --line: rgba(197,139,155,.25);
+      --measure: 700px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(116,64,80,.18), transparent 45%),
+        var(--bg);
+      color: var(--paper);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.85;
+      -webkit-font-smoothing: antialiased;
+    }
+    button { font: inherit; }
+    .intro {
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      padding: 32px 22px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .intro::before, .intro::after {
+      content: "";
+      position: absolute;
+      width: min(70vw, 440px);
+      aspect-ratio: 1;
+      border: 1px solid rgba(197,139,155,.09);
+      border-radius: 50%;
+      z-index: -1;
+      animation: breathe 8s ease-in-out infinite;
+    }
+    .intro::after {
+      width: min(88vw, 560px);
+      animation-delay: -4s;
+      border-color: rgba(197,139,155,.055);
+    }
+    .intro-inner { max-width: 620px; animation: rise 1.3s ease both; }
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: .24em;
+      font: 11px/1.8 system-ui, sans-serif;
+      color: var(--accent);
+      margin: 0 0 25px;
+    }
+    h1 {
+      font-size: clamp(2.3rem, 7vw, 4.5rem);
+      font-weight: normal;
+      letter-spacing: -.035em;
+      line-height: 1.12;
+      margin: 0 auto 22px;
+      max-width: 620px;
+    }
+    .intro-copy {
+      color: var(--muted);
+      font-size: clamp(1rem, 2.8vw, 1.15rem);
+      max-width: 440px;
+      margin: 0 auto 35px;
+    }
+    .open-button {
+      border: 1px solid var(--accent-soft);
+      border-radius: 999px;
+      color: var(--paper);
+      background: rgba(197,139,155,.06);
+      padding: 13px 25px;
+      cursor: pointer;
+      transition: background .25s ease, border-color .25s ease, transform .25s ease;
+      letter-spacing: .02em;
+    }
+    .open-button:hover, .open-button:focus-visible {
+      background: rgba(197,139,155,.15);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      outline: none;
+    }
+    .tiny-heart {
+      display: block;
+      color: var(--accent);
+      font: 22px/1 system-ui, sans-serif;
+      margin: 0 auto 22px;
+      opacity: .85;
+    }
+    .scroll-note {
+      position: absolute;
+      bottom: 22px;
+      left: 0; right: 0;
+      color: #88777d;
+      font: 10px/1.6 system-ui, sans-serif;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .letter-wrap {
+      display: none;
+      padding: 36px 22px 85px;
+      opacity: 0;
+    }
+    .letter-wrap.visible { display: block; animation: letter-in 1.2s ease forwards; }
+    .letter {
+      width: min(100%, var(--measure));
+      margin: 0 auto;
+    }
+    .letter-heading {
+      text-align: center;
+      margin: 0 auto 42px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--line);
+    }
+    .letter-heading .eyebrow { margin-bottom: 12px; }
+    h2 {
+      font-weight: normal;
+      font-size: clamp(2rem, 5vw, 3.1rem);
+      line-height: 1.2;
+      margin: 0;
+      letter-spacing: -.025em;
+    }
+    .letter p {
+      color: #e6dadd;
+      font-size: clamp(1.02rem, 2.4vw, 1.12rem);
+      margin: 0 0 1.45em;
+      text-wrap: pretty;
+    }
+    .letter p:first-of-type::first-letter {
+      color: var(--accent);
+    }
+    .letter p.final-sentence {
+      text-align: center;
+      color: #f4e6e9;
+      font-style: italic;
+      font-size: clamp(1.2rem, 3.3vw, 1.55rem);
+      margin: 2.8em auto 1.4em;
+    }
+    .closing {
+      margin: 58px auto 0;
+      padding-top: 28px;
+      border-top: 1px solid var(--line);
+      text-align: center;
+      max-width: 500px;
+    }
+    .closing-heart {
+      color: var(--accent);
+      font: 20px/1 system-ui, sans-serif;
+      margin-bottom: 18px;
+    }
+    .closing-phrase {
+      color: #e6cbd2;
+      font-style: italic;
+      font-size: clamp(1.15rem, 3vw, 1.4rem);
+      line-height: 1.6;
+      margin: 0 0 10px;
+    }
+    .closing-small {
+      font: 10px/1.8 system-ui, sans-serif;
+      color: #8f7d83;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+    .footer {
+      text-align: center;
+      color: #76676c;
+      font: 10px/1.8 system-ui, sans-serif;
+      letter-spacing: .12em;
+      padding: 0 20px 28px;
+    }
+    .back-top {
+      display: block;
+      margin: 34px auto 0;
+      color: var(--muted);
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      background: transparent;
+      padding: 5px 0;
+      cursor: pointer;
+      font: 12px/1.8 system-ui, sans-serif;
+    }
+    .back-top:hover { color: var(--paper); }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes breathe {
+      0%, 100% { transform: scale(.96); opacity: .55; }
+      50% { transform: scale(1.04); opacity: 1; }
+    }
+    @keyframes letter-in {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+    @media (min-width: 800px) {
+      .letter-wrap { padding-top: 55px; }
+      .letter p { line-height: 2; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="intro" id="inicio" aria-labelledby="intro-title">
+      <div class="intro-inner">
+        <span class="tiny-heart" aria-hidden="true">♡</span>
+        <p class="eyebrow">Para ti, en tu día especial.</p>
+        <h1 id="intro-title">Hay palabras que merecen encontrar su momento.</h1>
+        <p class="intro-copy">Una pequeña historia que quiero compartir contigo, escrita desde el corazón.</p>
+        <button class="open-button" id="openLetter" type="button">Leer historia<span aria-hidden="true">♡</span></button>
+      </div>
+      <div class="scroll-note">Con calma · Sin prisa</div>
+    </section>
+
+    <section class="letter-wrap" id="carta" aria-labelledby="letter-title">
+      <article class="letter">
+        <header class="letter-heading">
+          <p class="eyebrow">Una carta para ustedes</p>
+          <h2 id="letter-title">Fueron mi hogar.</h2>
+        </header>
+
+        <p>Feliz cumpleaños.❤️</p>
+
+        <p>No sé si exista una manera correcta de escribirle a alguien que alguna vez significó tanto para ti, especialmente cuando esa persona ya no ocupa el mismo lugar en tu vida. Supongo que hay sentimientos que no saben cómo acomodarse en unas cuantas palabras, y este es uno de esos casos.</p>
+
+        <p>Hoy es tu cumpleaños, y aunque nuestras vidas hayan tomado caminos diferentes, no quería dejar pasar este día sin desearte cosas bonitas. Porque, independientemente de cómo terminaron las cosas entre nosotros, hay algo que nunca voy a negar: fuiste una de las personas más importantes de mi vida y protagonizaste, junto a tu pequeña, una de las historias más bonitas que me ha tocado vivir.</p>
+
+        <p>A veces me pongo a pensar en todo lo que fuimos, en aquellos años en los que compartimos tanto, en las cosas que vivimos, en los planes que hicimos y en esa vida que tantas veces imaginé a tu lado. Y me resulta inevitable recordar que, para mí, tú no eras simplemente la mujer con la que estaba compartiendo una etapa de mi vida. Eras la mujer con la que quería compartir todas las etapas que vinieran después.</p>
+
+        <p>Yo realmente quería casarme contigo. Quería verte vestida de blanco y ser quien te esperara al final de ese camino. Quería construir una casa que pudiéramos llamar nuestra, llegar cansado del trabajo y encontrar en ustedes dos ese lugar al que siempre quisiera regresar. Quería vernos crecer, superar dificultades, cumplir sueños y descubrir que, incluso después de muchos años, seguíamos eligiéndonos.</p>
+
+        <p>Quería esa familia de cuatro que tantas veces imaginé, con nuestras propias historias, nuestras costumbres, nuestras fotografías y nuestros recuerdos. Quería una vida contigo, de esas que no necesitan ser perfectas para ser maravillosas, porque basta con tener a las personas correctas al lado para encontrar razones por las cuales seguir adelante.</p>
+
+        <p>Y en ese sueño siempre estuvo ella.</p>
+
+        <p>Quizá nunca llegué a explicarte por completo lo que significó para mí tenerla en mi vida. No era mi hija de sangre, pero el cariño que sentía por ella nunca necesitó explicaciones. La amé desde el lugar que me correspondió ocupar en su vida, con la ilusión de verla crecer, de acompañarla en sus etapas y de estar presente en los momentos que algún día se convertirían en recuerdos para ella.</p>
+
+        <p>No sé si algún día comprenderé del todo cómo se puede extrañar tanto una vida que ya no existe de la misma manera. Porque, cuando miro hacia atrás, no solamente recuerdo una relación. Recuerdo un hogar, una familia que imaginé para siempre y dos personas a las que llegué a querer de una manera que difícilmente podría explicar por completo.</p>
+
+        <p>Y no voy a mentirte: hay recuerdos que todavía tienen la capacidad de tocar fibras muy profundas dentro de mí. No porque viva esperando que el pasado regrese, ya que ese tema quedo en pausa, sino porque hubo momentos que fueron tan importantes que sería injusto fingir que no dejaron huella.</p>
+
+        <p>También hubo dolor. Hubo cosas que me costaron comprender y aceptar, y hubo una realidad que terminó siendo muy diferente de aquella que yo había imaginado. Tuve que aprender que amar a alguien no significa que necesariamente se quedará a nuestro lado, que no todos los planes compartidos se convierten en destinos comunes y que, a veces, la vida nos obliga a despedirnos de cosas que nosotros todavía queríamos conservar.</p>
+
+        <p>Pero, aun con todo eso, no quiero recordar nuestra historia únicamente por la manera en que terminó.</p>
+
+        <p>Prefiero recordar que hubo un tiempo en el que fuimos felices, en el que compartimos una parte importante de nuestras vidas y en el que yo tuve la oportunidad de amar a dos personas que hicieron de aquellos años algo verdaderamente especial para mí.</p>
+
+        <p>No sé cómo recuerdas tú nuestra historia. No sé si alguna vez te detienes a pensar en aquella familia que pudimos ser, en las cosas que planeamos o en aquel hombre que alguna vez te miró y sintió que había encontrado a la persona con la que quería quedarse.</p>
+
+        <p>Yo sí recuerdo muchas de esas cosas.</p>
+
+        <p>Recuerdo al hombre que fui cuando estaba contigo, los sueños que tenía y la ilusión con la que imaginaba nuestro futuro. Y aunque hoy soy consciente de que la vida no siguió el camino que esperaba, no me avergüenza haber soñado tanto contigo. Al contrario, sé que esos sueños nacieron de un sentimiento que para mí fue sincero.</p>
+
+        <p>Quizá eso sea lo más extraño de crecer y seguir adelante: descubrir que puedes aceptar que una historia terminó sin tener que convencerte de que nunca fue importante. Puedes reconocer que alguien te hizo daño y, aun así, agradecer lo bonito que viviste a su lado. Puedes comprender que ya no formas parte de su presente y seguir deseándole un futuro lleno de cosas buenas.</p>
+
+        <p>Y eso es lo que quiero para ti en este cumpleaños.</p>
+
+        <p>Deseo que tengas salud, paz, tranquilidad y muchísimas razones para sonreír. Que la vida te permita cumplir tus sueños, que encuentres felicidad en las cosas sencillas y que nunca te falte alguien con quien compartir los días buenos y también aquellos en los que todo parece un poquito más difícil.</p>
+
+        <p>Deseo que seas feliz, de verdad. Que tengas oportunidades para crecer, que puedas mirar hacia atrás con tranquilidad y que, cuando pienses en tu vida, encuentres motivos para sentirte orgullosa del camino que has recorrido.</p>
+
+        <p>Y deseo también que tu pequeña crezca rodeada de amor, que la vida la trate bonito y que nunca le falten motivos para sonreír. No sé qué lugar me corresponda ocupar hoy en sus recuerdos, pero siempre voy a guardar con cariño el lugar que ambas tuvieron en mi corazón.</p>
+
+        <p>No te escribo para reclamarte lo que pasó, para hacerte sentir culpable ni para pedirte que mires hacia atrás. Tampoco quiero que interpretes estas palabras como una obligación de responderme de alguna manera. Hay cosas que simplemente necesitaba expresar con sinceridad, y tu cumpleaños me pareció una ocasión especial para hacerlo.</p>
+
+        <p>Porque, aunque el tiempo haya pasado y nuestras vidas sean diferentes, no quiero que la forma en que terminó nuestra historia sea lo único que quede de ella.</p>
+
+        <p>Fuiste la mujer con la que quise casarme, con la que soñé construir un hogar y a la que, durante mucho tiempo, imaginé a mi lado en cada etapa de mi vida. Y aunque ese futuro no llegó a convertirse en nuestra realidad, eso no cambia lo que significó para mí haberlo soñado contigo.</p>
+
+        <p>A veces pienso que hay personas que llegan a nuestra vida y terminan convirtiéndose en parte de quienes somos. Personas a las que quizá ya no podamos acompañar, pero que nos dejaron recuerdos, aprendizajes y sentimientos que forman parte de nuestra historia para siempre.</p>
+
+        <p>Tú y tu pequeña son parte de la mía.</p>
+
+        <p>Y si algún día recuerdas aquellos años que compartimos, ojalá también puedas recordar que hubo cosas bonitas, que hubo momentos sinceros y que, al menos por mi parte, existió el deseo genuino de construir algo que durara toda la vida.</p>
+
+        <p>No sé qué nos habría deparado el futuro si las cosas hubieran sido diferentes. Tal vez habríamos cumplido muchos de aquellos sueños; tal vez la vida nos habría puesto otras pruebas. Nunca lo sabremos. Pero sí sé que, mientras tuve la oportunidad de compartir mi vida contigo, mi intención fue hacer de aquel amor un hogar.</p>
+
+        <p>Y eso, independientemente del final, siempre será una parte importante de mi historia.</p>
+
+        <p class="final-sentence">Feliz cumpleaños. ❤️</p>
+
+        <p>Que la vida te regale muchos años más, que te permita disfrutar de las personas que amas y que nunca te falten motivos para ser feliz.</p>
+
+        <p>Gracias por los momentos bonitos, por los recuerdos que alguna vez me hicieron sentir que tenía un hogar y por haber sido parte de una etapa de mi vida que, con todo lo que tuvo de hermoso y de difícil, siempre recordaré como una de las más significativas.</p>
+
+        <p>Hoy nuestros caminos son distintos, y aunque no puedo cambiar lo que pasó ni recuperar aquella vida que imaginé, sí puedo desearte lo mejor en la que tienes por delante.</p>
+
+        <p>Cuídate mucho. Y que seas muy feliz, de corazón.</p>
+
+        <footer class="closing">
+          <div class="closing-heart" aria-hidden="true">♡</div>
+          <p class="closing-phrase">Hay historias que cambian de rumbo, pero siempre tendrán un lugar en nuestra memoria. Porque esta historia siempre sera tuya, siempre sera mia y si tu aun asi lo deseas... siempre sera nuestra historia.</p>
+          <p class="closing-small">Con cariño, por todo lo bonito que alguna vez fuimos... Je vous aimerai toujours.</p>
+          <button class="back-top" type="button" id="backTop">Volver al inicio ↑</button>
+        </footer>
+      </article>
+    </section>
+  </main>
+  <div class="footer">Hecho con cariño · Feliz cumpleaños</div>
+  <script>
+    const openButton = document.getElementById('openLetter');
+    const letter = document.getElementById('carta');
+    openButton.addEventListener('click', () => {
+      letter.classList.add('visible');
+      letter.style.display = 'block';
+      window.setTimeout(() => {
+        letter.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      }, 60);
+      openButton.disabled = true;
+      openButton.textContent = 'Carta abierta ♡';
+    });
+    document.getElementById('backTop').addEventListener('click', () => {
+      document.getElementById('inicio').scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    });
+  </script>
+</body>
+</html>
